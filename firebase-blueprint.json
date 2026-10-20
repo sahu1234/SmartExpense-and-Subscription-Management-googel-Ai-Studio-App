@@ -1,0 +1,135 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with personal spending budget and preferences",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "User avatar photo URL"
+        },
+        "budgetLimit": {
+          "type": "number",
+          "description": "Monthly budget limit in INR"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["userId", "email", "budgetLimit"]
+    },
+    "ExpenseItem": {
+      "title": "ExpenseItem",
+      "description": "A recurring subscription or one-off expense record",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the expense item"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the item owner"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name or merchant of the subscription/expense",
+          "maxLength": 100
+        },
+        "type": {
+          "type": "string",
+          "enum": ["subscription", "daily"],
+          "description": "Type of expense (subscription or daily)"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount in INR"
+        },
+        "billingCycle": {
+          "type": "string",
+          "enum": ["weekly", "monthly", "quarterly", "yearly"],
+          "description": "Frequency of recurring billing"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Entertainment",
+            "Cloud & SaaS",
+            "Food & Dining",
+            "Utilities & Bills",
+            "Fitness & Health",
+            "Shopping",
+            "Transport",
+            "Work & Productivity",
+            "Education",
+            "Personal"
+          ],
+          "description": "Spending category"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "enum": ["UPI", "Credit Card", "Debit Card", "Net Banking", "Auto-Debit"],
+          "description": "Payment instrument used"
+        },
+        "renewalDate": {
+          "type": "string",
+          "description": "Due or renewal date (YYYY-MM-DD)"
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Whether a subscription is active or paused"
+        },
+        "autoRenew": {
+          "type": "boolean",
+          "description": "Whether auto-debit mandate is enabled"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Optional user notes",
+          "maxLength": 500
+        },
+        "tags": {
+          "type": "array",
+          "description": "List of user-defined tags"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Update timestamp"
+        }
+      },
+      "required": ["id", "userId", "name", "type", "amount", "billingCycle", "category", "paymentMethod", "renewalDate", "isActive"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile and budget settings"
+    },
+    "/users/{userId}/expenses/{expenseId}": {
+      "schema": "ExpenseItem",
+      "description": "Individual expenses and subscriptions belonging strictly to the user"
+    }
+  }
+}

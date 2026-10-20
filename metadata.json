@@ -1,0 +1,6 @@
+{
+  "name": "SubTrack · Smart Expense & Subscription Manager",
+  "description": "Modern dark-themed subscription and daily expense tracker with INR (₹) budgeting, interactive category breakdown, renewal timeline, and real-time Vibe Check warnings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
